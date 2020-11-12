@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ch9_demo.Models;
+using System.Net;
+using System.IO;
 
 namespace ch9_demo.Controllers
 {
@@ -33,5 +35,6 @@ namespace ch9_demo.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }
