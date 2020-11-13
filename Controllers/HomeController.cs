@@ -12,24 +12,25 @@ using Newtonsoft.Json;
 
 namespace DEMO2.Controllers
 {
-        public class  myfact
+    public class  myfact
+    {
+        string id; string text; string source;
+        string source_url; string language; string permalink;
+
+        public string Id { get => id; set => id = value;}
+        public string Text { get => text; set => text  = value;}
+        public string Source { get => source; set => source = value;}
+        public string SourceUrl { get => source_url; set => source_url = value;}
+        public string Language { get => language; set => language = value;}
+        public string Permalink { get => permalink; set => permalink = value;}
+
+        public void fact (string i, string t, string s, string u, string l, string p)
         {
-            string id; string text; string source;
-            string source_url; string language; string permalink;
-
-            public string Id { get => id; set => id = value;}
-            public string Text { get => text; set => text  = value;}
-            public string Source { get => source; set => source = value;}
-            public string SourceUrl { get => source_url; set => source_url = value;}
-            public string Language { get => language; set => language = value;}
-            public string Permalink { get => permalink; set => permalink = value;}
-
-            public void fact (string i, string t, string s, string u, string l, string p)
-            {
-                id = i; text = t; source = s;
-                source_url = u; language = l; permalink = p;
-            }
+            id = i; text = t; source = s;
+            source_url = u; language = l; permalink = p;
         }
+    }
+
     public class HomeController : Controller
     {
         myfact f = new myfact();
@@ -75,7 +76,11 @@ namespace DEMO2.Controllers
         
             f = JsonConvert.DeserializeObject<myfact>(reader.ReadToEnd ());
 
-            System.Diagnostics.Trace.TraceInformation(n + "\tStatus = " + response.StatusDescription + " >>> " + f.Text);
+            _logger.LogInformation(n + "\tStatus = " + response.StatusDescription + " >>> " + f.Text);
+            _logger.LogWarning(n + "\tStatus = " + response.StatusDescription + " >>> " + f.Text);
+            _logger.LogError(n + "\tStatus = " + response.StatusDescription + " >>> " + f.Text);
+            
+            //System.Diagnostics.Trace.TraceInformation(n + "\tStatus = " + response.StatusDescription + " >>> " + f.Text);
 
             // Cleanup the streams and the response.
             reader.Close ();
