@@ -45,6 +45,8 @@ namespace ch9_demo.Controllers
         {
             ViewData["test"] = getRandomFact().Text;
 
+            _logger.LogError("this is an error");
+
             return View();
         }
 
