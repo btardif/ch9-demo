@@ -54,6 +54,7 @@ namespace DEMO2.Controllers
 
         public IActionResult Health()
         {
+            _logger.LogInformation("I'm Healthy");
             Console.WriteLine("I'm Healthy");
             return View();
         }
@@ -77,11 +78,7 @@ namespace DEMO2.Controllers
             f = JsonConvert.DeserializeObject<myfact>(reader.ReadToEnd ());
 
             _logger.LogInformation(n + "\tStatus = " + response.StatusDescription + " >>> " + f.Text);
-            _logger.LogWarning(n + "\tStatus = " + response.StatusDescription + " >>> " + f.Text);
-            _logger.LogError(n + "\tStatus = " + response.StatusDescription + " >>> " + f.Text);
             
-            //System.Diagnostics.Trace.TraceInformation(n + "\tStatus = " + response.StatusDescription + " >>> " + f.Text);
-
             // Cleanup the streams and the response.
             reader.Close ();
             dataStream.Close ();
@@ -92,7 +89,7 @@ namespace DEMO2.Controllers
                 n=12;
 
                 Console.WriteLine("UNLUCKY 13!");
-                
+                _logger.LogError("Error >>>> UNLUCKY 13!");
                 throw new WebException ("UNLUCKY 13!", WebExceptionStatus.UnknownError);
             }
             else
