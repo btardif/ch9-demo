@@ -66,7 +66,7 @@ namespace ch9_demo.Controllers
         
             f = JsonConvert.DeserializeObject<myfact>(reader.ReadToEnd ());
 
-            Console.WriteLine (n + "\tStatus = " + response.StatusDescription + " >>> " + f.Text);
+            System.Diagnostics.Trace.TraceInformation(n + "\tStatus = " + response.StatusDescription + " >>> " + f.Text);
 
             // Cleanup the streams and the response.
             reader.Close ();
@@ -77,6 +77,8 @@ namespace ch9_demo.Controllers
             {
                 n=12;
                 Debug.WriteLine("UNLUCKY 13!");
+
+                System.Diagnostics.Trace.TraceError("UNLUCKY 13!");
                 
                 throw new WebException ("UNLUCKY 13!", WebExceptionStatus.UnknownError);
             }
