@@ -1,39 +1,40 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ch9_demo.Models;
+using DEMO2.Models;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace ch9_demo.Controllers
+namespace DEMO2.Controllers
 {
-
-    public class  myfact
-    {
-        string id; string text; string source;
-        string source_url; string language; string permalink;
-
-        public string Id { get => id; set => id = value;}
-        public string Text { get => text; set => text  = value;}
-        public string Source { get => source; set => source = value;}
-        public string SourceUrl { get => source_url; set => source_url = value;}
-        public string Language { get => language; set => language = value;}
-        public string Permalink { get => permalink; set => permalink = value;}
-
-        public void fact (string i, string t, string s, string u, string l, string p)
+        public class  myfact
         {
-            id = i; text = t; source = s;
-            source_url = u; language = l; permalink = p;
-        }
-    }
+            string id; string text; string source;
+            string source_url; string language; string permalink;
 
+            public string Id { get => id; set => id = value;}
+            public string Text { get => text; set => text  = value;}
+            public string Source { get => source; set => source = value;}
+            public string SourceUrl { get => source_url; set => source_url = value;}
+            public string Language { get => language; set => language = value;}
+            public string Permalink { get => permalink; set => permalink = value;}
+
+            public void fact (string i, string t, string s, string u, string l, string p)
+            {
+                id = i; text = t; source = s;
+                source_url = u; language = l; permalink = p;
+            }
+        }
     public class HomeController : Controller
     {
         myfact f = new myfact();
         static int n = 0;
-
+        
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -43,10 +44,16 @@ namespace ch9_demo.Controllers
 
         public IActionResult Index()
         {
-            ViewData["test"] = getRandomFact().Text;
+          
+             ViewData["fact"] = getRandomFact().Text;
+             ViewData["count"] = n;
+            
+            return View();
+        }
 
-            _logger.LogError("this is an error");
-
+        public IActionResult Health()
+        {
+            Console.WriteLine("I'm Healthy");
             return View();
         }
 
@@ -58,10 +65,6 @@ namespace ch9_demo.Controllers
 
         public myfact getRandomFact()
         {
-
-            System.Diagnostics.Trace.TraceInformation("Info statement");
-            System.Diagnostics.Trace.TraceError("Error statement");
-            System.Diagnostics.Trace.TraceWarning("Warning statement");
 
             n++;
 
@@ -83,8 +86,8 @@ namespace ch9_demo.Controllers
             {
                 n=12;
 
-                Console.WriteLine("ERROR >>>>> UNLUCKY 13!");
-                                
+                Console.WriteLine("UNLUCKY 13!");
+                
                 throw new WebException ("UNLUCKY 13!", WebExceptionStatus.UnknownError);
             }
             else
@@ -92,7 +95,5 @@ namespace ch9_demo.Controllers
                 return f;
             }           
         }
-
-
     }
 }

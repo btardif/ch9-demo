@@ -1,6 +1,6 @@
 using System;
 
-namespace ch9_demo.Models
+namespace DEMO2.Models
 {
     public class ErrorViewModel
     {
