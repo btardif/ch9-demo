@@ -76,10 +76,9 @@ namespace ch9_demo.Controllers
             if(n % 13 == 0) //Unlucky 13
             {
                 n=12;
-                Debug.WriteLine("UNLUCKY 13!");
 
-                System.Diagnostics.Trace.TraceError("UNLUCKY 13!");
-                
+                Console.WriteLine("ERROR >>>>> UNLUCKY 13!");
+                                
                 throw new WebException ("UNLUCKY 13!", WebExceptionStatus.UnknownError);
             }
             else
