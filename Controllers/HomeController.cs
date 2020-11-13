@@ -56,41 +56,33 @@ namespace ch9_demo.Controllers
 
         public myfact getRandomFact()
         {
-            try{
-                n++;
 
-                WebRequest request = WebRequest.Create ("https://uselessfacts.jsph.pl/random.json?language=en");
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse ();
-                Stream dataStream = response.GetResponseStream ();
-                StreamReader reader = new StreamReader (dataStream);
-            
-                f = JsonConvert.DeserializeObject<myfact>(reader.ReadToEnd ());
+            n++;
 
-                Console.WriteLine (n + "\tStatus = " + response.StatusDescription + " >>> " + f.Text);
+            WebRequest request = WebRequest.Create ("https://uselessfacts.jsph.pl/random.json?language=en");
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse ();
+            Stream dataStream = response.GetResponseStream ();
+            StreamReader reader = new StreamReader (dataStream);
+        
+            f = JsonConvert.DeserializeObject<myfact>(reader.ReadToEnd ());
 
-                // Cleanup the streams and the response.
-                reader.Close ();
-                dataStream.Close ();
-                response.Close ();
+            Console.WriteLine (n + "\tStatus = " + response.StatusDescription + " >>> " + f.Text);
 
-                if(n % 13 == 0) //Unlucky 13
-                {
-                    throw new Exception ("UNLUCKY 13!");
-                }
-                else
-                {
-                    return f;
-                }
-            }
-            catch
+            // Cleanup the streams and the response.
+            reader.Close ();
+            dataStream.Close ();
+            response.Close ();
+
+            if(n % 13 == 0) //Unlucky 13
             {
-                Debug.WriteLine("Unlucky13!");
                 n=12;
+                Debug.WriteLine("UNLUCKY 13!");
+                throw new Exception ("UNLUCKY 13!");
             }
-
-            f.Text = "🐛🐜🐛🐜🐛🐜";
-            return f;            
-           
+            else
+            {
+                return f;
+            }           
         }
 
 
