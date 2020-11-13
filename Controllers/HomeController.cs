@@ -84,18 +84,7 @@ namespace DEMO2.Controllers
             dataStream.Close ();
             response.Close ();
 
-            if(n % 13 == 0) //Unlucky 13
-            {
-                n=12;
-
-                Console.WriteLine("UNLUCKY 13!");
-                _logger.LogError("Error >>>> UNLUCKY 13!");
-                throw new WebException ("UNLUCKY 13!", WebExceptionStatus.UnknownError);
-            }
-            else
-            {
-                return f;
-            }           
+            return f;       
         }
     }
 }
