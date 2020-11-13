@@ -77,7 +77,8 @@ namespace ch9_demo.Controllers
             {
                 n=12;
                 Debug.WriteLine("UNLUCKY 13!");
-                throw new Exception ("UNLUCKY 13!");
+                
+                throw new WebException ("UNLUCKY 13!", WebExceptionStatus.UnknownError);
             }
             else
             {
