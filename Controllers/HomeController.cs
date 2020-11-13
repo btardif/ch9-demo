@@ -57,6 +57,10 @@ namespace ch9_demo.Controllers
         public myfact getRandomFact()
         {
 
+            System.Diagnostics.Trace.TraceInformation("Info statement");
+            System.Diagnostics.Trace.TraceError("Error statement");
+            System.Diagnostics.Trace.TraceWarning("Warning statement");
+
             n++;
 
             WebRequest request = WebRequest.Create ("https://uselessfacts.jsph.pl/random.json?language=en");
