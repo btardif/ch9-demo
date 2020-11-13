@@ -31,6 +31,9 @@ namespace ch9_demo.Controllers
 
     public class HomeController : Controller
     {
+        myfact f = new myfact();
+        static int n = 0;
+
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -40,15 +43,7 @@ namespace ch9_demo.Controllers
 
         public IActionResult Index()
         {
-            myfact f = new myfact();
-
-            f = getRandomFact();
-
-            Console.WriteLine (f.Text);
-
-            ViewData["test"] = f.Text;
-
-            
+            ViewData["test"] = getRandomFact().Text;
 
             return View();
         }
@@ -61,35 +56,41 @@ namespace ch9_demo.Controllers
 
         public myfact getRandomFact()
         {
-            // Create a request for the URL. 		
-            WebRequest request = WebRequest.Create ("https://uselessfacts.jsph.pl/random.json?language=en");
-            // If required by the server, set the credentials.
-            request.Credentials = CredentialCache.DefaultCredentials;
-            // Get the response.
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse ();
-            // Display the status.
-            Console.WriteLine (response.StatusDescription);
-            // Get the stream containing content returned by the server.
-            Stream dataStream = response.GetResponseStream ();
-            // Open the stream using a StreamReader for easy access.
-            StreamReader reader = new StreamReader (dataStream);
-            // Read the content.
-            string responseFromServer = reader.ReadToEnd ();
-            // Display the content.
-            // Console.WriteLine (responseFromServer);
-            
-            myfact f = new myfact();
-            
-            f = JsonConvert.DeserializeObject<myfact>(responseFromServer);
+            try{
+                n++;
 
+                WebRequest request = WebRequest.Create ("https://uselessfacts.jsph.pl/random.json?language=en");
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse ();
+                Stream dataStream = response.GetResponseStream ();
+                StreamReader reader = new StreamReader (dataStream);
             
-            
-            // Cleanup the streams and the response.
-            reader.Close ();
-            dataStream.Close ();
-            response.Close ();
+                f = JsonConvert.DeserializeObject<myfact>(reader.ReadToEnd ());
 
-            return f;
+                Console.WriteLine (n + "\tStatus = " + response.StatusDescription + " >>> " + f.Text);
+
+                // Cleanup the streams and the response.
+                reader.Close ();
+                dataStream.Close ();
+                response.Close ();
+
+                if(n % 13 == 0) //Unlucky 13
+                {
+                    throw new Exception ("UNLUCKY 13!");
+                }
+                else
+                {
+                    return f;
+                }
+            }
+            catch
+            {
+                Debug.WriteLine("Unlucky13!");
+                n=12;
+            }
+
+            f.Text = "🐛🐜🐛🐜🐛🐜";
+            return f;            
+           
         }
 
 
