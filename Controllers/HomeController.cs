@@ -77,14 +77,28 @@ namespace DEMO2.Controllers
         
             f = JsonConvert.DeserializeObject<myfact>(reader.ReadToEnd ());
 
+            
+
             _logger.LogInformation(n + "\tStatus = " + response.StatusDescription + " >>> " + f.Text);
             
             // Cleanup the streams and the response.
             reader.Close ();
             dataStream.Close ();
             response.Close ();
+ 
+ 
+            if(n % 13 == 0) //Unlucky 13
+            {
+                n=12;
 
-            return f;       
+                Console.WriteLine("UNLUCKY 13!");
+                _logger.LogError("Error >>>> UNLUCKY 13!");
+                throw new WebException ("UNLUCKY 13!", WebExceptionStatus.UnknownError);
+            }
+            else
+            {
+                return f;
+            } 
         }
     }
 }
